@@ -11,7 +11,7 @@ https://ghidra.re/ghidra_docs/api/ghidra/program/model/listing/Listing.html
 https://ghidra.re/ghidra_docs/api/ghidra/program/model/listing/Function.html
 
 `func = getFirstFunction()` returns first function in program
-`func = getFuncAfter(func)` can be used to iterate over all functions
+`func = getFunctionAfter(func)` can be used to iterate over all functions
 `func = currentProgram.getListing().getFunctionContaining()` to get the function an address belongs to
 
 `name = func.getName()` returns given name/label of function
@@ -29,13 +29,14 @@ https://ghidra.re/ghidra_docs/api/ghidra/program/model/listing/Variable.html
 ### Instructions
 https://ghidra.re/ghidra_docs/api/ghidra/program/model/listing/Instruction.html
 
+`ins = currentProgram.getListing().getInstructionAt(addr)` returns the instruction at the address
 `ins = getFirstInstruction()` returns first instruction in program
 `ins = getInstructionAfter(ins)` can be used to iterate over all instructions
 `next_ins = ins.getNext()` gets next instruction
 
 `ins.getMnemonicString()` returns the assembly instruction (ADD, CALL, JMP, etc.) used
 
-`ins.getDefaultOperandRepresentation(x)` returns argx in instruction (RAX, RBX, etc.)
+`ins.getDefaultOperandRepresentation(x)` returns position x in instruction (RAX, RBX, etc.)
 
 
 
@@ -63,15 +64,21 @@ https://ghidra.re/ghidra_docs/api/ghidra/program/model/listing/Data.html
 `listing.clearCodeUnits(start_addr, end_addr, True)` clears all defined data in range of start_addr to end_addr
 
 
+
+### Data Structures
+https://ghidra.re/ghidra_docs/api/ghidra/program/model/data/StructureDataType.html
+
+`newStructure = ghidra.program.model.data.StructureFactory.createStructureDataType(currentProgram, address, dataLength, ghidra.program.model.data.DEFAULT_STRUCTURE_NAME, True );`
+
+
+
 ### Data Types
 https://ghidra.re/ghidra_docs/api/ghidra/program/model/data/package-summary.html
 
 `IntegerDataType()`
 `StringDataType()`
 
-
-### Data Structures
-https://ghidra.re/ghidra_docs/api/ghidra/program/model/data/StructureDataType.html
+This GitHub page was a big help in adding a custom data type [GitHub Page](https://github.com/NationalSecurityAgency/ghidra/issues/1916)
 
 
 
@@ -98,6 +105,8 @@ https://ghidra.re/ghidra_docs/api/ghidra/program/model/mem/MemoryBlock.html
 
 `pointer_size = currentProgram.getDefaultPointerSize()` will get the default size of pointers (in bytes) for the binary
 
+`callDepth = ghidra.app.cmd.function.CallDepthChangeInfo(func)` to get something to tell the depth at address is function
+`depth = callDepth.getDepth(addr)` to return the depth at address (Ghidra shows value in hex)
 
 
 https://ghidra.re/ghidra_docs/api/ghidra/program/model/listing/RepeatableComment.html
